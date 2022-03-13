@@ -6,20 +6,37 @@ import Aside from "../../components/Aside/Aside";
 import "./Home.scss";
 import { Col, Container, Row } from "react-bootstrap";
 import PageControl from "../../components/PageControl/PageControl";
+import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 
 const Home = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>();
   const [page, setPage] = useState<number>(1);
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalData, setmodalData] = useState<Post>({
+    body: "",
+    id: 0,
+    title: "",
+    userId: 0,
+  });
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleShowModal = () => setShowModal(true);
+  const handleModalData = (post: Post) => {
+    setmodalData(post);
+  };
+
   useEffect(() => {
+    const loadPosts = async (page: number): Promise<void> => {
+      const postsData = await fetchPosts(page);
+      setPosts(postsData);
+    };
+
     loadPosts(page);
     // window.scrollTo(0, 0);
   }, [page]);
-
-  const loadPosts = async (page: number): Promise<void> => {
-    const postsData = await fetchPosts(page);
-    setPosts(postsData);
-  };
 
   const handlePrevPage = (): void => {
     if (page > 1) setPage(page - 1);
@@ -32,13 +49,22 @@ const Home = () => {
   return (
     <>
       <section>
+        <ConfirmationModal
+          show={showModal}
+          onHide={handleCloseModal}
+          post={modalData}
+        />
         <Container>
           <Row className="gy-4">
-            {posts.length > 0 ? (
+            {posts ? (
               posts.map((post: Post) => {
                 return (
                   <Col xs={12} key={post.id}>
-                    <PostCard post={post} />
+                    <PostCard
+                      post={post}
+                      handleShowModal={handleShowModal}
+                      handleModalData={handleModalData}
+                    />
                   </Col>
                 );
               })
