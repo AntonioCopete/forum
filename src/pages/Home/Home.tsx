@@ -1,9 +1,12 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import Aside from "../../components/Aside/Aside";
+
 import { fetchPosts } from "../../api/axios";
+
 import Post from "../../interfaces/Post";
-import Card from "../../components/Card/Card";
+
+import PostCard from "../../components/PostCard/PostCard";
+import Aside from "../../components/Aside/Aside";
+
 import "./Home.scss";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -15,6 +18,7 @@ const Home = () => {
   useEffect(() => {
     loadPosts(page);
     console.log(page);
+    // window.scrollTo(0, 0);
   }, [page]);
 
   const loadPosts = async (page: number) => {
@@ -25,35 +29,44 @@ const Home = () => {
   };
 
   const handlePrevPage = () => {
-    setPage(page - 1);
+    if (page > 1) setPage(page - 1);
   };
 
   const handleNextPage = () => {
-    setPage(page + 1);
+    if (page < 10) setPage(page + 1);
   };
 
   return (
     <>
-      <section className="container">
+      <section>
         {posts.length > 0 ? (
           posts.map((post: Post) => {
-            return <Card post={post} key={post.id} />;
+            return <PostCard post={post} key={post.id} />;
           })
         ) : (
           <p>Loading posts...</p>
         )}
 
-        {page > 1 && (
-          <div onClick={handlePrevPage}>
-            <IoIosArrowBack />
-          </div>
-        )}
-        {page < 10 && (
-          <div onClick={handleNextPage}>
-            <IoIosArrowForward />
-          </div>
-        )}
+        <nav className="d-flex justify-content-center align-items-center">
+          <button
+            className="page-panel__button"
+            onClick={handlePrevPage}
+            disabled={page <= 1}
+          >
+            <IoIosArrowBack size={30} />
+          </button>
+
+          <p className="page-panel__text m-0">{page}</p>
+          <button
+            className="page-panel__button"
+            onClick={handleNextPage}
+            disabled={page >= 10}
+          >
+            <IoIosArrowForward size={30} />
+          </button>
+        </nav>
       </section>
+
       <Aside />
     </>
   );

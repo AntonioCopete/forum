@@ -6,4 +6,9 @@ const fetchPosts = async (page) => {
   return data;
 };
 
-export { fetchPosts };
+const fetchPostAuthor = async (userId) => {
+  const { data } = await axios.get(`${apiUrl}/users/${userId}`);
+  return data;
+};
+
+export { fetchPosts, fetchPostAuthor };
