@@ -7,7 +7,6 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const fetchPosts = async (page: number): Promise<Post[]> => {
   const { data } = await axios.get(`${apiUrl}/posts?_page=${page}`);
-
   return data;
 };
 

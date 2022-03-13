@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchPostAuthor, fetchPostComments } from "../../api/axios";
-import Post from "../../interfaces/Post";
+import { Post, Comment } from "../../interfaces";
 import { Accordion, Card } from "react-bootstrap";
 import "./PostCard.scss";
-import Comment from "../../interfaces/Comment";
 import CommentCard from "../CommentCard/CommentCard";
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
 }
 
 const PostCard = ({ post }: Props) => {
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
@@ -19,12 +18,12 @@ const PostCard = ({ post }: Props) => {
     loadComments();
   }, []);
 
-  const loadAuthor = async () => {
+  const loadAuthor = async (): Promise<void> => {
     const authorData = await fetchPostAuthor(post.userId);
     setAuthor(authorData.username);
   };
 
-  const loadComments = async () => {
+  const loadComments = async (): Promise<void> => {
     const commentsData = await fetchPostComments(post.id);
     setComments(commentsData);
   };
@@ -40,7 +39,7 @@ const PostCard = ({ post }: Props) => {
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header>Comments</Accordion.Header>
-            <Accordion.Body>
+            <Accordion.Body className="d-flex flex-column gap-4">
               {comments.map((comment: Comment) => {
                 return <CommentCard comment={comment} key={comment.id} />;
               })}

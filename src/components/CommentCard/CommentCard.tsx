@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import Comment from "../../interfaces/Comment";
+import { Comment } from "../../interfaces";
 
 interface Props {
   comment: Comment;

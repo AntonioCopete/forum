@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-
 import { fetchPosts } from "../../api/axios";
-
-import Post from "../../interfaces/Post";
-
+import { Post } from "../../interfaces";
 import PostCard from "../../components/PostCard/PostCard";
 import Aside from "../../components/Aside/Aside";
-
 import "./Home.scss";
-
 import { Col, Container, Row } from "react-bootstrap";
 import PageControl from "../../components/PageControl/PageControl";
 
@@ -21,9 +16,8 @@ const Home = () => {
     // window.scrollTo(0, 0);
   }, [page]);
 
-  const loadPosts = async (page: number) => {
+  const loadPosts = async (page: number): Promise<void> => {
     const postsData = await fetchPosts(page);
-
     setPosts(postsData);
   };
 
