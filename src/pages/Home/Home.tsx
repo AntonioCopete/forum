@@ -7,12 +7,20 @@ import "./Home.scss";
 import { Col, Container, Row } from "react-bootstrap";
 import PageControl from "../../components/PageControl/PageControl";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import { useDispatch, useSelector } from "react-redux";
+import { savePosts } from "../../redux/posts/actions";
+import { RootState } from "../../redux/posts/selector";
 
 const Home = () => {
-  const [posts, setPosts] = useState<Post[]>();
+  const dispatch = useDispatch();
+  const posts = useSelector((state: RootState) => state.posts);
+  // console.log(useSelector((state) => state.posts));
+
+  // const [posts, setPosts] = useState<Post[]>();
   const [page, setPage] = useState<number>(1);
 
   const [showModal, setShowModal] = useState<boolean>(false);
+
   const [modalData, setmodalData] = useState<Post>({
     body: "",
     id: 0,
@@ -20,23 +28,27 @@ const Home = () => {
     userId: 0,
   });
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-  const handleShowModal = () => setShowModal(true);
-  const handleModalData = (post: Post) => {
-    setmodalData(post);
-  };
-
   useEffect(() => {
     const loadPosts = async (page: number): Promise<void> => {
       const postsData = await fetchPosts(page);
-      setPosts(postsData);
+      console.log(postsData[0].id);
+
+      dispatch(savePosts(postsData));
     };
 
     loadPosts(page);
     // window.scrollTo(0, 0);
   }, [page]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleShowModal = () => setShowModal(true);
+
+  const handleModalData = (post: Post) => {
+    setmodalData(post);
+  };
 
   const handlePrevPage = (): void => {
     if (page > 1) setPage(page - 1);
@@ -49,11 +61,11 @@ const Home = () => {
   return (
     <>
       <section>
-        <ConfirmationModal
+        {/* <ConfirmationModal
           show={showModal}
           onHide={handleCloseModal}
           post={modalData}
-        />
+        /> */}
         <Container>
           <Row className="gy-4">
             {posts ? (

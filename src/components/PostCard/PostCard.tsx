@@ -6,6 +6,8 @@ import CommentCard from "../CommentCard/CommentCard";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import { Post, Comment } from "../../interfaces";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../redux/posts/actions";
 
 interface Props {
   post: Post;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const PostCard = ({ post, handleShowModal, handleModalData }: Props) => {
+  const dispatch = useDispatch();
   const [author, setAuthor] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
 
@@ -38,6 +41,7 @@ const PostCard = ({ post, handleShowModal, handleModalData }: Props) => {
   }, [post]);
 
   const handleClickModal = (): void => {
+    dispatch(deletePost(post.id));
     handleModalData(post);
     handleShowModal();
   };
