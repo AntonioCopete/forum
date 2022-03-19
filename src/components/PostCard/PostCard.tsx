@@ -5,25 +5,17 @@ import "./PostCard.scss";
 import CommentCard from "../CommentCard/CommentCard";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
 import { Post, Comment } from "../../interfaces";
-import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import { useDispatch } from "react-redux";
 import { deletePost } from "../../redux/posts/actions";
 
 interface Props {
   post: Post;
-  handleShowModal: () => void;
-  handleModalData: (post: Post) => void;
 }
 
-const PostCard = ({ post, handleShowModal, handleModalData }: Props) => {
+const PostCard = ({ post }: Props) => {
   const dispatch = useDispatch();
   const [author, setAuthor] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
-
-  // const [showModal, setShowModal] = useState<boolean>(false);
-
-  // const handleCloseModal = () => setShowModal(false);
-  // const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
     const loadAuthor = async (): Promise<void> => {
@@ -40,17 +32,13 @@ const PostCard = ({ post, handleShowModal, handleModalData }: Props) => {
     loadComments();
   }, [post]);
 
-  const handleClickModal = (): void => {
+  const handleDeletePost = (): void => {
     dispatch(deletePost(post.id));
-    handleModalData(post);
-    handleShowModal();
   };
 
   return (
-    <article className="card w-100">
-      {/* <ConfirmationModal show={showModal} onHide={handleCloseModal} /> */}
-
-      <Card className="w-100">
+    <article className="card w-100 p-0">
+      <Card className="post-card">
         <Card.Body>
           <div className="d-flex justify-content-between">
             <Card.Title>{post.title}</Card.Title>
@@ -58,9 +46,10 @@ const PostCard = ({ post, handleShowModal, handleModalData }: Props) => {
             <DropdownButton
               title={<IoEllipsisVerticalSharp />}
               id="dropdown"
+              className="post-card__dropdown"
               variant="light"
             >
-              <Dropdown.Item onClick={handleClickModal}>Delete</Dropdown.Item>
+              <Dropdown.Item onClick={handleDeletePost}>Delete</Dropdown.Item>
             </DropdownButton>
           </div>
           <Card.Text>{post.body}</Card.Text>

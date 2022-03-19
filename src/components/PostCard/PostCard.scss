@@ -1,4 +1,6 @@
-#dropdown {
-    background-color: unset;
-    border: none;
+.card {
+    &__dropdown {
+        background-color: unset;
+        border: none;
+    }
 }

@@ -10,6 +10,10 @@ const fetchPosts = async (page: number): Promise<Post[]> => {
   return data;
 };
 
+const fetchAuthors = async (): Promise<Author[]> => {
+  const { data } = await axios.get(`${apiUrl}/users`);
+  return data;
+};
 const fetchPostAuthor = async (userId: number): Promise<Author> => {
   const { data } = await axios.get(`${apiUrl}/users/${userId}`);
   return data;
@@ -20,4 +24,17 @@ const fetchPostComments = async (postId: number): Promise<Comment[]> => {
   return data;
 };
 
-export { fetchPosts, fetchPostAuthor, fetchPostComments };
+const fetchAvatar = async (name: string): Promise<Comment[]> => {
+  const { data } = await axios.get(
+    `https://avatars.dicebear.com/api/human/${name}.svg`
+  );
+  return data;
+};
+
+export {
+  fetchPosts,
+  fetchPostAuthor,
+  fetchPostComments,
+  fetchAuthors,
+  fetchAvatar,
+};

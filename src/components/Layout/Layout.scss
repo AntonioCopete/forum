@@ -1,0 +1,13 @@
+.grid-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 0.5fr 12fr;
+    column-gap: 1rem;
+    grid-template-areas:
+        "Header Header"
+        "Main Aside";
+}
+
+.main-layout {
+    grid-area: Main;
+}

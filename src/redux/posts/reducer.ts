@@ -2,15 +2,11 @@ import { AnyAction } from "redux";
 import { Post } from "../../interfaces";
 import { SAVE_POSTS, DELETE_POST } from "./types";
 
-// interface IAppState {
-//   posts: Post[];
-// }
+type AppState = Post[];
 
-// const initialState: IAppState = {
-//   posts: [],
-// };
+const initialState: AppState = [];
 
-const postReducer = (state = [], action: AnyAction) => {
+const postReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case SAVE_POSTS: {
       return action.payload;
