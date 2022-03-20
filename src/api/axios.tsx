@@ -25,17 +25,4 @@ const fetchPostComments = async (postId: number): Promise<Comment[]> => {
   return data;
 };
 
-const fetchAvatar = async (name: string): Promise<Comment[]> => {
-  const { data } = await axios.get(
-    `https://avatars.dicebear.com/api/human/${name}.svg`
-  );
-  return data;
-};
-
-export {
-  fetchPosts,
-  fetchPostAuthor,
-  fetchPostComments,
-  fetchAuthors,
-  fetchAvatar,
-};
+export { fetchPosts, fetchPostAuthor, fetchPostComments, fetchAuthors };

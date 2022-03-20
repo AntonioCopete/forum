@@ -17,13 +17,11 @@ const Home = () => {
   useEffect(() => {
     const loadPosts = async (page: number): Promise<void> => {
       const postsData = await fetchPosts(page);
-      console.log(postsData[0].id);
 
       dispatch(savePosts(postsData));
     };
 
     loadPosts(page);
-    // window.scrollTo(0, 0);
   }, [page]);
 
   const handlePrevPage = (): void => {
@@ -39,7 +37,7 @@ const Home = () => {
       <section>
         <Container>
           <Row className="gy-4">
-            {posts ? (
+            {posts.length > 0 ? (
               posts.map((post: Post) => {
                 return <PostCard key={post.id} post={post} />;
               })
