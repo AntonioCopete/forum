@@ -53,7 +53,7 @@ const PostCard = ({ post }: Props) => {
             </DropdownButton>
           </div>
           <Card.Text>{post.body}</Card.Text>
-          <Card.Footer>Author: {author ? author : "Author"}</Card.Footer>
+          <Card.Footer>Author: {author}</Card.Footer>
         </Card.Body>
         <Accordion>
           <Accordion.Item eventKey="0">
