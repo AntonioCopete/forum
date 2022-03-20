@@ -1,4 +1,5 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import "./PageControl.scss";
 
 interface Props {
   page: number;
@@ -8,7 +9,7 @@ interface Props {
 
 const PageControl = ({ page, handleNextPage, handlePrevPage }: Props) => {
   return (
-    <nav className="d-flex justify-content-center align-items-center">
+    <nav className="d-flex justify-content-center align-items-center page-panel">
       <button
         className="page-panel__button"
         onClick={() => handlePrevPage()}

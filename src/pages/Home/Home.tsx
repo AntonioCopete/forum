@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchPosts } from "../../api/axios";
 import { Post } from "../../interfaces";
 import PostCard from "../../components/PostCard/PostCard";
-import "./Home.scss";
 import { Container, Row } from "react-bootstrap";
 import PageControl from "../../components/PageControl/PageControl";
 import { useDispatch, useSelector } from "react-redux";

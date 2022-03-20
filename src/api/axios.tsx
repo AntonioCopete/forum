@@ -1,9 +1,10 @@
 import axios from "axios";
+import CONFIG from "../config/config";
 import Author from "../interfaces/Author";
 import Comment from "../interfaces/Comment";
 import Post from "../interfaces/Post";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = CONFIG.api.url;
 
 const fetchPosts = async (page: number): Promise<Post[]> => {
   const { data } = await axios.get(`${apiUrl}/posts?_page=${page}`);

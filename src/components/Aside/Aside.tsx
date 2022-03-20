@@ -6,13 +6,13 @@ import AsideUser from "../AsideUser/AsideUser";
 const Aside = () => {
   const [authors, setAuthors] = useState<Author[]>([]);
   useEffect(() => {
+    const loadAuthors = async () => {
+      const authorsData = await fetchAuthors();
+      setAuthors(authorsData);
+    };
+
     loadAuthors();
   }, []);
-
-  const loadAuthors = async () => {
-    const authorsData = await fetchAuthors();
-    setAuthors(authorsData);
-  };
 
   return (
     <aside>
